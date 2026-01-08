@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: homepage
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/brians-tech-corner/k8s-homelab.git
+    targetRevision: main
+    path: apps/production/homepage
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
+  syncPolicy:
+    automated:
+      prune: true      # Delete resources that are removed from Git
+      selfHeal: true   # Automatically sync when cluster state drifts
+      allowEmpty: false
+    syncOptions:
+    - CreateNamespace=true
