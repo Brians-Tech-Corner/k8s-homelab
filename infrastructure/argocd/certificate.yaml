@@ -1,0 +1,15 @@
+# Save as infrastructure/argocd/certificate.yaml
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: argocd-tls
+  namespace: argocd
+spec:
+  secretName: argocd-tls
+  issuerRef:
+    name: letsencrypt-production  # or letsencrypt-staging for testing
+    kind: ClusterIssuer
+  privateKey:
+    rotationPolicy: Always
+  dnsNames:
+  - argocd.devopswithbrian.com  # Replace with your actual domain
